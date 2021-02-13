@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Teachers{% endblock %}
+{% block content %}
+<h1>Teachers</h1>
+{% if request.user.is_authenticated %}
+	<h3><a href="{% url 'import' %}">Bulk Import</a></h3>
+{% endif %}
+<h4>Filter by Last Name</h4>
+<p>
+	{% for chr in last_name_chars%}
+		<a href="{% url 'list_teacher' %}?val={{chr}}&type=name">{{chr}}</a>
+	{% endfor %}
+</p>
+<h4>Filter by Subject</h4>
+
+<p>
+	{% for chr in subject_chars%}
+		<a href="{%url 'list_teacher' %}?val={{chr}}&type=subject">{{chr}}</a>
+	{% endfor %}
+</p>
+<div class="module">
+{% for teacher in object_list %}
+<div class="course-info">
+<h3>{{ teacher.first_name }} {{teacher.last_name}} <a href="{% url 'teacher_details' teacher.id %}">Teach</a></h3>
+
+</div>
+{% empty %}
+<p>There is no teacher details to show. please create and try</p>
+{% endfor %}
+<p>
+
+</p>
+</div>
+{% endblock %}
